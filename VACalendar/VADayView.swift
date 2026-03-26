@@ -105,7 +105,8 @@ class VADayView: UIView {
         layer.borderWidth = dayViewAppearanceDelegate?.borderWidth?(for: state) ?? dateLabel.layer.borderWidth
         
         dateLabel.textColor = dayViewAppearanceDelegate?.textColor?(for: state) ?? dateLabel.textColor
-        dateLabel.backgroundColor = dayViewAppearanceDelegate?.textBackgroundColor?(for: state) ?? dateLabel.backgroundColor
+        dateLabel.layer.borderColor = (dayViewAppearanceDelegate?.textBackgroundColor?(for: state) ?? dateLabel.backgroundColor)?.cgColor
+        dateLabel.layer.borderWidth = 2
         
         if Calendar.current.isDateInToday(day.date)  && state != .selected{
             dateLabel.textColor = .black
