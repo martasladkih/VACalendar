@@ -90,7 +90,7 @@ class VADayView: UIView {
     
     @objc
     private func didTapSelect() {
-        guard day.state != .out && day.state != .unavailable else { return }
+        guard day.state != .out else { return }
         delegate?.dayStateChanged(day)
     }
     

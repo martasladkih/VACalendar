@@ -23,7 +23,7 @@ public enum VACalendarViewType {
 @objc
 public protocol VACalendarViewDelegate: class {
     // use this method for single selection style
-    @objc optional func selectedDate(_ date: Date)
+    @objc optional func selectedDate(_ date: Date, error: NSError?)
     // use this method for multi selection style
     @objc optional func selectedDates(_ dates: [Date])
 }
@@ -283,11 +283,22 @@ extension VACalendarView: VAMonthViewDelegate {
     func dayStateChanged(_ day: VADay, in month: VAMonth) {
         switch selectionStyle {
         case .single:
+            if day.state == .unavailable {
+                let error = NSError(
+                    domain: "VACalendar",
+                    code: 1,
+                    userInfo: [NSLocalizedDescriptionKey: "Invalid date"]
+                )
+                
+                calendarDelegate?.selectedDate?(day.date, error: error)
+                
+                return
+            }
             guard day.state == .available else { return }
             
             calendar.deselectAll()
             calendar.setDaySelectionState(day, state: .selected)
-            calendarDelegate?.selectedDate?(day.date)
+            calendarDelegate?.selectedDate?(day.date, error: nil)
             
         case .multi:
             calendar.setDaySelectionState(day, state: day.reverseSelectionState)
