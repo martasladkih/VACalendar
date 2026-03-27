@@ -101,8 +101,6 @@ class VADayView: UIView {
         }
         
         backgroundColor = dayViewAppearanceDelegate?.backgroundColor?(for: state) ?? backgroundColor
-        layer.borderColor = dayViewAppearanceDelegate?.borderColor?(for: state).cgColor ?? layer.borderColor
-        layer.borderWidth = dayViewAppearanceDelegate?.borderWidth?(for: state) ?? dateLabel.layer.borderWidth
         
         dateLabel.textColor = dayViewAppearanceDelegate?.textColor?(for: state) ?? dateLabel.textColor
         dateLabel.layer.borderColor = (dayViewAppearanceDelegate?.textBackgroundColor?(for: state) ?? dateLabel.backgroundColor)?.cgColor
